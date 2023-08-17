@@ -141,7 +141,7 @@ async def command_start(message: types.Message):
     else:
         print(is_registered(tID))
         if is_registered(tID) == False:
-            await message.answer("Приветствуем тебя на смене «Центрополис: курс на приключения»!\nЧтобы продолжить, введи код, который тебе скажут твои квартальные")
+            await message.answer("*Приветствуем тебя на смене «Центрополис: курс на приключения»!*\n\nЧтобы продолжить, *введи код*, который тебе скажут твои квартальные")
             await form_key.key.set()
         else:
             await message.answer("*Ты уже ввёл код подтверждения. Чтобы открыть меню, нажми /menu*")
@@ -202,7 +202,7 @@ async def process_rename(message: types.Message, state: FSMContext):
         await state.finish()
         del edutaiment_dict[message.chat.id]
         await command_start(message)
-
+'''
 @dp.message_handler(state=form_edutaiment.comment_4)
 async def process_rename(message: types.Message, state: FSMContext):
     if message.text != "/start":
@@ -215,12 +215,13 @@ async def process_rename(message: types.Message, state: FSMContext):
         await state.finish()
         del edutaiment_dict[message.chat.id]
         await command_start(message)
+'''
 
-@dp.message_handler(state=form_edutaiment.comment_5)
+@dp.message_handler(state=form_edutaiment.comment_4)
 async def process_rename(message: types.Message, state: FSMContext):
     if message.text != "/start":
         await state.finish()
-        edutaiment_dict[message.chat.id]["comment_5"] = message.text
+        edutaiment_dict[message.chat.id]["comment_4"] = message.text
         cur.execute(
             f"INSERT INTO edutaiment (telegram_id, post_date, comment_1, comment_2, comment_3) VALUES ({message.chat.id}, \"{datetime.now()}\", \"{edutaiment_dict[message.chat.id]['comment_1']}\", \"{edutaiment_dict[message.chat.id]['comment_2']}\", \"{edutaiment_dict[message.chat.id]['comment_3']}\")")
         db.commit()
@@ -230,8 +231,8 @@ async def process_rename(message: types.Message, state: FSMContext):
                                     f"\n*1.* {edutaiment_dict[message.chat.id]['comment_1']}"
                                     f"\n*2.* {edutaiment_dict[message.chat.id]['comment_2']}"
                                     f"\n*3.* {edutaiment_dict[message.chat.id]['comment_3']}"
-                                    f"\n*4.* {edutaiment_dict[message.chat.id]['comment_4']}"
-                                    f"\n*5.* {edutaiment_dict[message.chat.id]['comment_5']}")
+                                    f"\n*4.* {edutaiment_dict[message.chat.id]['comment_4']}")
+                                    #f"\n*5.* {edutaiment_dict[message.chat.id]['comment_5']}")
         print(edutaiment_dict[message.chat.id])
         await message.answer("*Обратная связь принята, спасибо!*")
         edutaiment_dict[message.chat.id] = {}
