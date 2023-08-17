@@ -144,7 +144,7 @@ async def command_start(message: types.Message):
             await message.answer("*Приветствуем тебя на смене «Центрополис: курс на приключения»!*\n\nЧтобы продолжить, *введи код*, который тебе скажут твои квартальные")
             await form_key.key.set()
         else:
-            await message.answer("*Ты уже ввёл код подтверждения. Чтобы открыть меню, нажми /menu*")
+            await message.answer("*Чтобы открыть меню, нажми /menu*")
 
 @dp.message_handler(commands=['stop'])
 async def command_start(message: types.Message):
@@ -174,11 +174,11 @@ async def process_rename(message: types.Message, state: FSMContext):
         cur.execute(f"INSERT INTO users (tID) VALUES ({message.chat.id})")
         await message.answer("*Отлично, код верный! Теперь ты можешь использовать команду /menu\n\nХорошего тебе дня!*")
     else:
-        await message.answer("Упс, неверный код. Попробуй снова, нажми на /start и введи код")
+        await message.answer("*Упс, неверный код. \n\nПопробуй снова, нажми на /start и введи код*")
 
 @dp.message_handler(state=form_edutaiment.comment_1)
 async def process_rename(message: types.Message, state: FSMContext):
-    if message.text != "/start":
+    if message.text != "/menu":
         await state.finish()
         edutaiment_dict[message.chat.id]["comment_1"] = message.text
         await message.answer("*2. Как кварталятам первый день стажировки? Что понравилось ? Что не понравилось?*")
@@ -192,7 +192,7 @@ async def process_rename(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=form_edutaiment.comment_2)
 async def process_rename(message: types.Message, state: FSMContext):
-    if message.text != "/start":
+    if message.text != "/menu":
         await state.finish()
         edutaiment_dict[message.chat.id]["comment_2"] = message.text
         await message.answer("*3. Понимают ли кварталята ценность трудового удостоверения?*")
@@ -219,7 +219,7 @@ async def process_rename(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=form_edutaiment.comment_4)
 async def process_rename(message: types.Message, state: FSMContext):
-    if message.text != "/start":
+    if message.text != "/menu":
         await state.finish()
         edutaiment_dict[message.chat.id]["comment_4"] = message.text
         cur.execute(
@@ -244,7 +244,7 @@ async def process_rename(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=form_edutaiment.comment_3)
 async def process_rename(message: types.Message, state: FSMContext):
-    if message.text != "/start":
+    if message.text != "/menu":
         await state.finish()
         edutaiment_dict[message.chat.id]["comment_3"] = message.text
         await message.answer("*4. Как дети воспринимают историю с центриками? Поняли ли они , что в этом есть соревновательный мотив?*")
@@ -258,7 +258,7 @@ async def process_rename(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=form_modules.comment)
 async def process_rename(message: types.Message, state: FSMContext):
-    if message.text != "/start":
+    if message.text != "/menu":
         await state.finish()
         module_dict[message.chat.id]["comment"] = message.text
         module_name = \
@@ -272,10 +272,9 @@ async def process_rename(message: types.Message, state: FSMContext):
         # print(cur.execute(f"INSERT INTO modules (telegram_id, post_date, module, group, comment) VALUES ({message.chat.id}, \"{datetime.now().strftime('%d-%m-%Y')}\", \"{module_dict[message.chat.id]['module']}\", {module_dict[message.chat.id]['group']}, \"{module_dict[message.chat.id]['comment']}\")"))
 
         await bot.send_message(chat_id=ADMIN,
-                               text="*Обратная связь*"
-                                    f"\n\nКвартал: *{module_dict[message.chat.id]['group']}*"
-                                    f"\nМодуль: *{module_name[0]}*"
-                                    f"\nКомментарий: *{module_dict[message.chat.id]['comment']}*")
+                               text=f"*Обратная связь | {module_dict[message.chat.id]['group']} квартал*"
+                                    f"\n*Модуль:* {module_name[0]}"
+                                    f"\n*Комментарий:* {module_dict[message.chat.id]['comment']}")
         await message.answer("*Спасибо тебе большое! Хорошего дня!*")
         module_dict[message.chat.id] = {}
 
