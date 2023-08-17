@@ -8,7 +8,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
-db = sqlite3.connect("files/database1.db")
+db = sqlite3.connect("/root/projects/dc_feedback_bot/files/database1.db")
 cur = db.cursor()
 
 WORKING = False
