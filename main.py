@@ -226,8 +226,7 @@ async def process_rename(message: types.Message, state: FSMContext):
             f"INSERT INTO edutaiment (telegram_id, post_date, comment_1, comment_2, comment_3) VALUES ({message.chat.id}, \"{datetime.now()}\", \"{edutaiment_dict[message.chat.id]['comment_1']}\", \"{edutaiment_dict[message.chat.id]['comment_2']}\", \"{edutaiment_dict[message.chat.id]['comment_3']}\")")
         db.commit()
         await bot.send_message(chat_id=ADMIN,
-                               text="*Игротехника*"
-                                    f"\n\n*Квартал:* {edutaiment_dict[message.chat.id]['group']}"
+                               text=f"*Игротехника | {edutaiment_dict[message.chat.id]['group']} квартал*"
                                     f"\n*1.* {edutaiment_dict[message.chat.id]['comment_1']}"
                                     f"\n*2.* {edutaiment_dict[message.chat.id]['comment_2']}"
                                     f"\n*3.* {edutaiment_dict[message.chat.id]['comment_3']}"
