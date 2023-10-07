@@ -8,13 +8,13 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
-db = sqlite3.connect("/root/projects/dc_feedback_bot/files/database1.db")
+db = sqlite3.connect("/root/projects/dc_feedback_bot/files/database1.db") # db source
 cur = db.cursor()
 
 WORKING = False
-API_TOKEN = "6379303105:AAGUNqdnvs4a8Km24pY4mz_qcgS6ir5D6lg"
-ADMIN = -1001874740927
-MAIN_KEY = 4892
+API_TOKEN = "API-TOKEN-HERE"
+ADMIN = "ADMIN-ID-HERE"
+MAIN_KEY = "REGISTRATION-CODE"
 
 bot = Bot(token=API_TOKEN, parse_mode="Markdown")
 dp = Dispatcher(bot, storage=MemoryStorage())
